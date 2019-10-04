@@ -28,7 +28,7 @@ tar -xf l_openvino_toolkit*
 ### Build the image
 
 ``` bash
-docker build -t openvino .
+docker build -t openvino-18.04 .
 ```
 
 ## Using the image
@@ -40,7 +40,7 @@ You can directly run a container based on this image or use this image across ot
 To run a container based on this image:
 
 ``` bash
-docker run -ti openvino /bin/bash
+docker run -ti openvino-18.04 /bin/bash
 ```
 
 ### Use the image in another container
@@ -51,7 +51,7 @@ Move to sample-app directory and build the image
 
 ``` bash
 cd sample-app
-docker build -t openvino-app .
+docker build -t openvino-app-18.04 .
 ```
 
 ### Run the the container with X enabled (Linux)
@@ -67,7 +67,7 @@ The following flags needs to be added to the docker run command:
 To run the docker-app image with the display enabled:
 
 ``` bash
-docker run --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" -ti docker-app /bin/bash
+docker run --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" -ti docker-app-18.04 /bin/bash
 ```
 
 ### Run two demos

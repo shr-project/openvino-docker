@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ADD l_openvino_toolkit* /openvino/
 
@@ -14,8 +14,8 @@ RUN apt-get install -y --no-install-recommends \
         git \
         lsb-release \
         pciutils \
-        python3.5 \
-        python3.5-dev \
+        python3.6 \
+        python3.6-dev \
         python3-pip \
         python3-setuptools \
         sudo

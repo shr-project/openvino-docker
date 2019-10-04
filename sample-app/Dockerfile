@@ -1,4 +1,4 @@
-FROM openvino:latest
+FROM openvino-18.04:latest
 
 COPY . /app/
 
