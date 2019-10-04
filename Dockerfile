@@ -18,6 +18,7 @@ RUN apt-get install -y --no-install-recommends \
         python3.6-dev \
         python3-pip \
         python3-setuptools \
+        python3-yaml \
         sudo
 
 # installing OpenVINO dependencies
@@ -45,6 +46,23 @@ RUN apt-get install -y gnupg2 && \
         echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc && \
         apt install -y python-rosinstall python-rosinstall-generator python-wstool build-essential && \
         echo "ROS1 melodic installed"
+
+ADD download-model-pipeline-people.sh /openvino/download-model-pipeline-people.sh
+RUN cd /opt/intel/openvino/deployment_tools/ && \
+        git clone https://github.com/opencv/open_model_zoo.git open_model_zoo_git && \
+        sh /openvino/download-model-pipeline-people.sh && \
+        export MODELS=/opt/intel/openvino/models && \
+        mkdir -p ${MODELS}/Transportation/object_detection/face/pruned_mobilenet_reduced_ssd_shared_weights/dldt && \
+        mkdir -p ${MODELS}/Retail/object_attributes/age_gender/dldt && \
+        mkdir -p ${MODELS}/Transportation/object_attributes/headpose/vanilla_cnn/dldt && \
+        mkdir -p ${MODELS}/Retail/object_attributes/emotions_recognition/0003/dldt && \
+        mkdir -p ${MODELS}/Transportation/object_attributes/facial_landmarks/custom-35-facial-landmarks/dldt && \
+        ln -snf ${MODELS}/intel/face-detection-adas-0001/FP16 ${MODELS}/Transportation/object_detection/face/pruned_mobilenet_reduced_ssd_shared_weights/dldt/ && \
+        ln -snf ${MODELS}/intel/age-gender-recognition-retail-0013/FP16 ${MODELS}/Retail/object_attributes/age_gender/dldt/ && \
+        ln -snf ${MODELS}/intel/head-pose-estimation-adas-0001/FP16 ${MODELS}/Transportation/object_attributes/headpose/vanilla_cnn/dldt/ && \
+        ln -snf ${MODELS}/intel/emotions-recognition-retail-0003/FP16 ${MODELS}/Retail/object_attributes/emotions_recognition/0003/dldt/ && \
+        ln -snf ${MODELS}/intel/facial-landmarks-35-adas-0002/FP16 ${MODELS}/Transportation/object_attributes/facial_landmarks/custom-35-facial-landmarks/dldt/ && \
+        echo "Pipeline people model fetched"
 
 # clean up 
 RUN apt autoremove -y && \
