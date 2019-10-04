@@ -1,0 +1,103 @@
+From a712f65b3c62894384651cd2d9169d42d73cfb49 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <martin.jansa@lge.com>
+Date: Thu, 3 Oct 2019 18:39:56 +0000
+Subject: [PATCH] CMakeLists.txt: drop realsense2 dependencies
+
+---
+ dynamic_vino_lib/CMakeLists.txt                      |  2 +-
+ .../dynamic_vino_lib/inputs/realsense_camera.h       |  6 +++---
+ dynamic_vino_lib/src/inputs/realsense_camera.cpp     | 12 ++++++++++++
+ 3 files changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/dynamic_vino_lib/CMakeLists.txt b/dynamic_vino_lib/CMakeLists.txt
+index c947b8d..d470c69 100644
+--- a/dynamic_vino_lib/CMakeLists.txt
++++ b/dynamic_vino_lib/CMakeLists.txt
+@@ -128,7 +128,7 @@ if (SUPPORT_SSE41 EQUAL 0)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse4.1")
+ endif()
+ 
+-set(DEPENDENCIES realsense2 ${OpenCV_LIBS} cpu_extension)
++set(DEPENDENCIES ${OpenCV_LIBS} cpu_extension)
+ 
+ add_library(${PROJECT_NAME} SHARED
+   src/services/frame_processing_server.cpp
+diff --git a/dynamic_vino_lib/include/dynamic_vino_lib/inputs/realsense_camera.h b/dynamic_vino_lib/include/dynamic_vino_lib/inputs/realsense_camera.h
+index f4a87d0..5270aa3 100644
+--- a/dynamic_vino_lib/include/dynamic_vino_lib/inputs/realsense_camera.h
++++ b/dynamic_vino_lib/include/dynamic_vino_lib/inputs/realsense_camera.h
+@@ -22,7 +22,7 @@
+ #ifndef DYNAMIC_VINO_LIB_INPUTS_REALSENSE_CAMERA_H
+ #define DYNAMIC_VINO_LIB_INPUTS_REALSENSE_CAMERA_H
+ 
+-#include <librealsense2/rs.hpp>
++// #include <librealsense2/rs.hpp>
+ #include <opencv2/opencv.hpp>
+ #include "dynamic_vino_lib/inputs/base_input.h"
+ 
+@@ -63,8 +63,8 @@ class RealSenseCamera : public BaseInputDevice
+   void config() override;
+ 
+  private:
+-  rs2::config cfg_;
+-  rs2::pipeline pipe_;
++  //rs2::config cfg_;
++  //rs2::pipeline pipe_;
+   bool first_read_ = true;
+ };
+ }  // namespace Input
+diff --git a/dynamic_vino_lib/src/inputs/realsense_camera.cpp b/dynamic_vino_lib/src/inputs/realsense_camera.cpp
+index 8ebd273..6683e26 100644
+--- a/dynamic_vino_lib/src/inputs/realsense_camera.cpp
++++ b/dynamic_vino_lib/src/inputs/realsense_camera.cpp
+@@ -24,6 +24,9 @@
+ // RealSenseCamera
+ bool Input::RealSenseCamera::initialize()
+ {
++#if 1
++  return false;
++#else
+   cfg_.enable_stream(RS2_STREAM_COLOR, 640, 480, RS2_FORMAT_BGR8, 30);
+   setInitStatus(pipe_.start(cfg_));
+   setWidth(640);
+@@ -50,10 +53,14 @@ bool Input::RealSenseCamera::initialize()
+     first_read_ = false;
+   }
+   return true;
++#endif
+ }
+ 
+ bool Input::RealSenseCamera::initialize(size_t width, size_t height)
+ {
++#if 1
++  return false;
++#else
+   if (3 * width != 4 * height)
+   {
+     slog::err << "The aspect ratio must be 4:3 when using RealSense camera"
+@@ -87,10 +94,14 @@ bool Input::RealSenseCamera::initialize(size_t width, size_t height)
+     first_read_ = false;
+   }
+   return true;
++#endif
+ }
+ 
+ bool Input::RealSenseCamera::read(cv::Mat* frame)
+ {
++#if 1
++  return false;
++#else
+   if (!isInit())
+   {
+     return false;
+@@ -110,6 +121,7 @@ bool Input::RealSenseCamera::read(cv::Mat* frame)
+           CV_8UC3, (void*)color_frame.get_data(), cv::Mat::AUTO_STEP)
+       .copyTo(*frame);
+   return true;
++#endif
+ }
+ void Input::RealSenseCamera::config()
+ {
+-- 
+2.17.1
+
