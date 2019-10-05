@@ -93,6 +93,8 @@ RUN apt-get install -y libgflags2.2 libgflags-dev && \
     rm -rf /opt/openvino_toolkit/ros_openvino_toolkit && \
     test ! -d /opt/openvino_toolkit && mkdir -p /opt/openvino_toolkit && \
     cp -ra ~/catkin_ws/src/ros_openvino_toolkit /opt/openvino_toolkit/ && \
+    ln -snf openvino /opt/intel/computer_vision_sdk && \
+    cp -ra /opt/intel/computer_vision_sdk/deployment_tools/intel/* /opt/intel/computer_vision_sdk/deployment_tools/intel_models && \
     echo "ros_openvino_toolkit installed"
 
 # clean up 
