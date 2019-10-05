@@ -68,7 +68,7 @@ The following flags needs to be added to the docker run command:
 To run the docker-app image with the display enabled:
 
 ``` bash
-docker run --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" --device /dev/video0 -ti docker-app-18.04 /bin/bash
+docker run --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" --device /dev/video0 -ti openvino-app-18.04 /bin/bash
 ```
 
 ### Run two demos
