@@ -90,3 +90,14 @@ Run the inference pipeline demo:
 ``` bash
 ./demo_security_barrier_camera.sh
 ```
+
+Run ros_openvino
+``` bash
+cd catkin_ws/
+source devel/setup.bash
+sed 's/pipeline_people_myriad.yaml/pipeline_people_cpu_no_rviz.yaml/g; /^  <node name="rviz"/,+2d; /^  <arg name="default_rviz"/d; /^        <remap from =".openvino_toolkit.images/d' /opt/openvino_toolkit/ros_openvino_toolkit/vino_launch/launch/pipeline_people_myriad.launch > /opt/openvino_toolkit/ros_openvino_toolkit/vino_launch/launch/pipeline_people_cpu_no_rviz.launch
+sed 's/pipeline_people_myriad.yaml/pipeline_people_cpu_no_rviz.yaml/g; /^  <node name="rviz"/,+2d; /^  <arg name="default_rviz"/d; /^        <remap from =".openvino_toolkit.images/d' ./src/ros_openvino_toolkit/vino_launch/launch/pipeline_people_myriad.launch > ./src/ros_openvino_toolkit/vino_launch/launch/pipeline_people_cpu_no_rviz.launch
+sed 's/MYRIAD/CPU/g; s/,RViz//g' /opt/openvino_toolkit/ros_openvino_toolkit/vino_launch/param/pipeline_people_myriad.yaml > /opt/openvino_toolkit/ros_openvino_toolkit/vino_launch/param/pipeline_people_cpu_no_rviz.yaml
+sed 's/MYRIAD/CPU/g; s/,RViz//g' ./src/ros_openvino_toolkit/vino_launch/param/pipeline_people_myriad.yaml > ./src/ros_openvino_toolkit/vino_launch/param/pipeline_people_cpu_no_rviz.yaml
+roslaunch vino_launch pipeline_people_cpu_no_rviz.launch
+```

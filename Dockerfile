@@ -97,6 +97,8 @@ RUN apt-get install -y libgflags2.2 libgflags-dev && \
     cp -ra /opt/intel/computer_vision_sdk/deployment_tools/intel/* /opt/intel/computer_vision_sdk/deployment_tools/intel_models && \
     echo "ros_openvino_toolkit installed"
 
+RUN apt-get install -y vim
+
 # clean up 
 RUN apt autoremove -y && \
     rm -rf /openvino /var/lib/apt/lists/*
