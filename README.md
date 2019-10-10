@@ -91,6 +91,12 @@ Run the inference pipeline demo:
 ./demo_security_barrier_camera.sh
 ```
 
+Run interactive face detection demo:
+
+``` bash
+/opt/intel/openvino/deployment_tools/open_model_zoo_git/demos/omz_demos_build/interactive_face_detection_demo-launch.sh
+```
+
 Run ros_openvino
 ``` bash
 cd catkin_ws/

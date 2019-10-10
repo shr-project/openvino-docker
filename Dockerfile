@@ -65,10 +65,10 @@ RUN cd /opt/intel/openvino/deployment_tools/ && \
         echo "Pipeline people model fetched"
 
 RUN apt install -y libgtk-3-dev && \
-        cd /opt/intel/openvino/deployment_tools/open_model_zoo/demos/ && \
-        HOME=/opt/intel/openvino/deployment_tools/open_model_zoo/demos ./build_demos.sh && \
-        echo "export F=cam MODELS=/opt/intel/openvino/models; /opt/intel/openvino/deployment_tools/open_model_zoo/demos/omz_demos_build/intel64/Release/interactive_face_detection_demo -i $F -m $MODELS/Transportation/object_detection/face/pruned_mobilenet_reduced_ssd_shared_weights/dldt/FP16/face-detection-adas-0001.xml -m_ag $MODELS/Retail/object_attributes/age_gender/dldt/FP16/age-gender-recognition-retail-0013.xml -m_hp $MODELS/Transportation/object_attributes/headpose/vanilla_cnn/dldt/FP16/head-pose-estimation-adas-0001.xml -m_em $MODELS/Retail/object_attributes/emotions_recognition/0003/dldt/FP16/emotions-recognition-retail-0003.xml -m_lm $MODELS/Transportation/object_attributes/facial_landmarks/custom-35-facial-landmarks/dldt/FP16/facial-landmarks-35-adas-0002.xml -d cpu" > /opt/intel/openvino/deployment_tools/open_model_zoo/demos/omz_demos_build/interactive_face_detection_demo-launch.sh && \
-        echo "OMZ demos built in /opt/intel/openvino/deployment_tools/open_model_zoo/demos/omz_demos_build"
+        cd /opt/intel/openvino/deployment_tools/open_model_zoo_git/demos/ && \
+        HOME=/opt/intel/openvino/deployment_tools/open_model_zoo_git/demos ./build_demos.sh && \
+        echo "export F=cam MODELS=/opt/intel/openvino/models; /opt/intel/openvino/deployment_tools/open_model_zoo_git/demos/omz_demos_build/intel64/Release/interactive_face_detection_demo -i $F -m \$MODELS/Transportation/object_detection/face/pruned_mobilenet_reduced_ssd_shared_weights/dldt/FP16/face-detection-adas-0001.xml -m_ag \$MODELS/Retail/object_attributes/age_gender/dldt/FP16/age-gender-recognition-retail-0013.xml -m_hp \$MODELS/Transportation/object_attributes/headpose/vanilla_cnn/dldt/FP16/head-pose-estimation-adas-0001.xml -m_em \$MODELS/Retail/object_attributes/emotions_recognition/0003/dldt/FP16/emotions-recognition-retail-0003.xml -m_lm \$MODELS/Transportation/object_attributes/facial_landmarks/custom-35-facial-landmarks/dldt/FP16/facial-landmarks-35-adas-0002.xml -d cpu" > /opt/intel/openvino/deployment_tools/open_model_zoo_git/demos/omz_demos_build/interactive_face_detection_demo-launch.sh && \
+        echo "OMZ demos built in /opt/intel/openvino/deployment_tools/open_model_zoo_git/demos/omz_demos_build"
 
 ADD 0001-CMakeLists.txt-drop-realsense2-dependencies.patch /openvino/0001-CMakeLists.txt-drop-realsense2-dependencies.patch
 RUN apt-get install -y libgflags2.2 libgflags-dev && \
