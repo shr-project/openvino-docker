@@ -81,6 +81,7 @@ RUN apt-get install -y libgflags2.2 libgflags-dev && \
     git config --global user.email "you@example.com" && \
     git config --global user.name "Your Name" && \
     git am /openvino/0001-CMakeLists.txt-drop-realsense2-dependencies.patch && \
+    sed -i 's/opencl=1/opencl=0/g; s/librealsense=1/librealsense=0/g; s/clean=1/clean=0/g' script/modules.conf && \
     sed -i 's/OpenCV REQUIRED COMPONENTS$/OpenCV REQUIRED COMPONENTS videoio/g' dynamic_vino_lib/CMakeLists.txt && \
     . /opt/ros/melodic/setup.sh && \
     export InferenceEngine_DIR=/opt/intel/openvino/deployment_tools/inference_engine/share && \
