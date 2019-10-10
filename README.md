@@ -40,7 +40,7 @@ You can directly run a container based on this image or use this image across ot
 To run a container based on this image:
 
 ``` bash
-docker run -ti openvino-18.04 /bin/bash
+docker run -ti openvino-18.04-2019.2 /bin/bash
 ```
 
 ### Use the image in another container
@@ -94,16 +94,19 @@ Run the inference pipeline demo:
 Run interactive face detection demo:
 
 ``` bash
-/opt/intel/openvino/deployment_tools/open_model_zoo_git/demos/omz_demos_build/interactive_face_detection_demo-launch.sh
+sh /opt/intel/openvino/deployment_tools/open_model_zoo/demos/omz_demos_build/interactive_face_detection_demo-launch.sh
 ```
 
 Run ros_openvino
 ``` bash
-cd catkin_ws/
+cd ~/catkin_ws/
 source devel/setup.bash
 sed 's/pipeline_people_myriad.yaml/pipeline_people_cpu_no_rviz.yaml/g; /^  <node name="rviz"/,+2d; /^  <arg name="default_rviz"/d; /^        <remap from =".openvino_toolkit.images/d' /opt/openvino_toolkit/ros_openvino_toolkit/vino_launch/launch/pipeline_people_myriad.launch > /opt/openvino_toolkit/ros_openvino_toolkit/vino_launch/launch/pipeline_people_cpu_no_rviz.launch
 sed 's/pipeline_people_myriad.yaml/pipeline_people_cpu_no_rviz.yaml/g; /^  <node name="rviz"/,+2d; /^  <arg name="default_rviz"/d; /^        <remap from =".openvino_toolkit.images/d' ./src/ros_openvino_toolkit/vino_launch/launch/pipeline_people_myriad.launch > ./src/ros_openvino_toolkit/vino_launch/launch/pipeline_people_cpu_no_rviz.launch
-sed 's/MYRIAD/CPU/g; s/,RViz//g' /opt/openvino_toolkit/ros_openvino_toolkit/vino_launch/param/pipeline_people_myriad.yaml > /opt/openvino_toolkit/ros_openvino_toolkit/vino_launch/param/pipeline_people_cpu_no_rviz.yaml
-sed 's/MYRIAD/CPU/g; s/,RViz//g' ./src/ros_openvino_toolkit/vino_launch/param/pipeline_people_myriad.yaml > ./src/ros_openvino_toolkit/vino_launch/param/pipeline_people_cpu_no_rviz.yaml
+sed 's/MYRIAD/CPU/g; s/,RViz//g; s/ImageWindow, //g' /opt/openvino_toolkit/ros_openvino_toolkit/vino_launch/param/pipeline_people_myriad.yaml > /opt/openvino_toolkit/ros_openvino_toolkit/vino_launch/param/pipeline_people_cpu_no_rviz.yaml
+sed 's/MYRIAD/CPU/g; s/,RViz//g; s/ImageWindow, //g' ./src/ros_openvino_toolkit/vino_launch/param/pipeline_people_myriad.yaml > ./src/ros_openvino_toolkit/vino_launch/param/pipeline_people_cpu_no_rviz.yaml
+cp /opt/openvino_toolkit/ros_openvino_toolkit/data/labels/emotions-recognition/FP32/emotions-recognition-retail-0003.labels /opt/intel/openvino_2019.2.275/deployment_tools/intel/emotions-recognition-retail-0003/FP16/
+cp /opt/openvino_toolkit/ros_openvino_toolkit/data/labels/emotions-recognition/FP32/emotions-recognition-retail-0003.labels /opt/intel/computer_vision_sdk/deployment_tools/intel_models/emotions-recognition-retail-0003/FP16/
+
 roslaunch vino_launch pipeline_people_cpu_no_rviz.launch
 ```
